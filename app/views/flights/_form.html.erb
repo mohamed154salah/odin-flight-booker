@@ -1,0 +1,7 @@
+<%=form_with(url: find_flights_path, method: :get) do |form| %>
+  <%=form.select(:departure_airport_id, options_for_select(@airports_options) ,prompt: "departure")%>
+  <%=form.select(:arrival_airport_id, options_for_select(@airports_options) ,prompt: "arrival") %>
+  <%= form.select(:start_date, Flight.options_for_select, selected: params[:start_date], prompt: "Date") %>
+  <%=form.select(:tickets, (1..4), selected: params[:tickets], prompt: "Passengers") %>
+  <%=form.submit "Search", disable_with: 'Searching...' %>
+<%end%>

@@ -1,0 +1,24 @@
+<div class="container">
+<h1>Flight Booker</h1>
+
+<%= render partial: "form" %>
+
+<% if @f_flights.present? %>
+  <h2>Flights</h2>
+  <%@f_flights.each do |flight| %>
+    <div class="flight">
+      <p>Departure: <%= flight.departure_airport.name %></p>
+      <p>Arrival: <%= flight.arrival_airport.name %></p>
+      <p>Departure time: <%= flight.start_date.to_date %></p>
+      <p>Duration: <%= flight.duration %></p>
+    </div>
+    <%= button_to 'Book Flight',
+                new_booking_path,
+                method: :get,
+                params: { flights_id: flight.id, tickets: params[:tickets] } %>
+  <%end%>
+
+<%else%>
+  <h2>No flights found</h2>
+<%end%>
+</div>

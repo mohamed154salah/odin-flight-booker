@@ -1,0 +1,42 @@
+<h2>Flight details</h2>
+<table>
+  <tbody>
+    <tr>
+      <th>Departure airport</th>
+      <td><%= @flight.departure_airport.name %></td>
+    </tr>
+    <tr>
+      <th>Arrival airport</th>
+      <td><%= @flight.arrival_airport.name %></td>
+    </tr>
+    <tr>
+      <th>Start datetime</th>
+      <td><%= @flight.start_date.strftime('%B %d, %Y %H:%M') %></td>
+    </tr>
+    <tr>
+      <th>Duration</th>
+      <td><%= @flight.duration %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= form_for @booking do |f| %>
+  <%=f.hidden_field :flights_id, value: params[:flights_id]%>
+  <% @booking.passengers.each do |passenger| %>
+    <%= f.fields_for :passengers, passenger do |p| %>
+      <div class="passenger">
+        <h3>Passenger <%= p.index + 1 %></h3>
+        <div class="field">
+          <%= p.label :name %>
+          <%= p.text_field :name %>
+        </div>
+        <div class="field">
+          <%= p.label :email %>
+          <%= p.email_field :email %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= f.submit "Book now",method: :get %>
+<% end %>
